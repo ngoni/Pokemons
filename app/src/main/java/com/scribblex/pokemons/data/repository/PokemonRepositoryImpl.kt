@@ -20,7 +20,7 @@ class PokemonRepositoryImpl @Inject constructor(
             }
     }
 
-    override fun getPokemonDetail(id: String): Flow<Resource<DetailPayload?>> {
+    override fun getPokemonDetail(id: Int): Flow<Resource<DetailPayload?>> {
         return dataSourceImpl.getPokemonDetail(id)
             .transform {
                 emit(Resource.success(it.data))

@@ -7,5 +7,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface PokemonRepository {
     fun getAllPokemon(): Flow<Resource<ArrayList<Results>>>
-    fun getPokemonDetail(id: String): Flow<Resource<DetailPayload?>>
+    fun getPokemonDetail(id: Int): Flow<Resource<DetailPayload?>>
 }

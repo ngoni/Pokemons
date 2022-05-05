@@ -17,7 +17,7 @@ class PokemonRemoteDataSource @Inject constructor(
         emit(response)
     }
 
-    fun getPokemonDetail(id: String): Flow<Resource<DetailPayload>> = flow {
+    fun getPokemonDetail(id: Int): Flow<Resource<DetailPayload>> = flow {
         val response = getResult { pokemonApiService.getPokemonDetails(id = id) }
         emit(response)
     }
