@@ -41,7 +41,7 @@ class PokemonDetailViewModelTest {
         }
 
     @Test
-    fun `when getAllPokemon call is successful, tHEN the returned response should match expected data`() =
+    fun `when getAllPokemon call is successful, then the response should match expected data`() =
         runTest {
             repository.getAllPokemon().test {
                 val item = awaitItem()

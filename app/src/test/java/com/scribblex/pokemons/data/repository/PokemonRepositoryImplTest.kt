@@ -30,14 +30,14 @@ class PokemonRepositoryImplTest {
     }
 
     @Test
-    fun `GIVEN getPokemonDetail is called and successful, THEN returned response should matched expected data`() =
+    fun `when getPokemonDetail is called and successful, then the response should matched expected data`() =
         runTest {
             val payload = repository.getPokemonDetail(pokemonId).first()
             assertThat(DetailPayload()).isEqualTo(payload.data)
         }
 
     @Test
-    fun `GIVEN getAllPokemon is called and successful,THEN the returned response should match expected data`() =
+    fun `when getAllPokemon is called and successful, then the response should match expected data`() =
         runTest {
             repository.getAllPokemon().test {
                 val item = awaitItem()
