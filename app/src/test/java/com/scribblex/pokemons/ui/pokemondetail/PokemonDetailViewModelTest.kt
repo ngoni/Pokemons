@@ -27,16 +27,20 @@ class PokemonDetailViewModelTest {
 
     @Before
     fun setup() {
-        viewModel = PokemonDetailViewModel(repository = repository)
+        viewModel = PokemonDetailViewModel(
+            repository = repository,
+            dispatcher = mainDispatchRule.testDispatcher
+        )
     }
 
     @Test
-    fun `when getPokemonDetail call is successful, then verify viewState has pokemon details`() = runTest {
-        mockNetworkResponse()
-        viewModel.getPokemonDetail(id = pokemonId)
-        val viewState = viewModel.viewState.value
-        assertThat(viewState.pokemonDetail?.name).isEqualTo(pokemonDetail.name)
-    }
+    fun `when getPokemonDetail call is successful, then verify viewState has pokemon details`() =
+        runTest {
+            mockNetworkResponse()
+            viewModel.getPokemonDetail(id = pokemonId)
+            val viewState = viewModel.viewState.value
+            assertThat(viewState.pokemonDetail?.name).isEqualTo(pokemonDetail.name)
+        }
 
     private fun mockNetworkResponse() {
         whenever(repository.getPokemonDetail(pokemonId)).thenReturn(

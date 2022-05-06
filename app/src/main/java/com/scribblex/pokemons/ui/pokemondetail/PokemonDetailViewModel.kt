@@ -2,7 +2,8 @@ package com.scribblex.pokemons.ui.pokemondetail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.scribblex.pokemons.data.repository.PokemonRepositoryImpl
+import com.scribblex.pokemons.DispatcherProvider
+import com.scribblex.pokemons.data.repository.PokemonRepository
 import com.scribblex.pokemons.ui.DetailScreenViewState
 import com.scribblex.pokemons.ui.State
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PokemonDetailViewModel @Inject constructor(
-    private val repository: PokemonRepositoryImpl
+    private val repository: PokemonRepository,
+    private val dispatcher: DispatcherProvider
 ) :
     ViewModel() {
 
@@ -23,7 +25,7 @@ class PokemonDetailViewModel @Inject constructor(
     val viewState: StateFlow<DetailScreenViewState> = _viewState
 
     fun getPokemonDetail(id: Int) {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcher.main) {
             repository.getPokemonDetail(id).collect {
                 val state = DetailScreenViewState(
                     state = State.Success,

@@ -2,7 +2,8 @@ package com.scribblex.pokemons.ui.pokemonlisting
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.scribblex.pokemons.data.repository.PokemonRepositoryImpl
+import com.scribblex.pokemons.DispatcherProvider
+import com.scribblex.pokemons.data.repository.PokemonRepository
 import com.scribblex.pokemons.ui.ListingScreenViewState
 import com.scribblex.pokemons.ui.State.Success
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,9 +16,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PokemonListViewModel @Inject constructor(
-    private val repository: PokemonRepositoryImpl
-) :
-    ViewModel() {
+    private val repository: PokemonRepository,
+    private val dispatchers: DispatcherProvider
+) : ViewModel() {
 
     private val _viewState = MutableStateFlow(ListingScreenViewState())
     val viewState: StateFlow<ListingScreenViewState> = _viewState
@@ -27,7 +28,7 @@ class PokemonListViewModel @Inject constructor(
     }
 
     fun getAllPokemon() {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatchers.main) {
             repository.getAllPokemon().collect {
                 val state = it.data?.let { resultsList ->
                     ListingScreenViewState(
