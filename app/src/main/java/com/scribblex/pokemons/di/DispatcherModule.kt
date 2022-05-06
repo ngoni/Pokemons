@@ -13,5 +13,5 @@ import javax.inject.Singleton
 object DispatcherModule {
     @Provides
     @Singleton
-    fun provideDefaultDispatcher(): DispatcherProvider = DefaultDispatchers()
+    fun provideDefaultDispatchers(): DispatcherProvider = DefaultDispatchers()
 }
