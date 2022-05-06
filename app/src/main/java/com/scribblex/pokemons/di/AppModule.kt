@@ -3,6 +3,7 @@ package com.scribblex.pokemons.di
 import com.scribblex.pokemons.DispatcherProvider
 import com.scribblex.pokemons.data.remote.PokemonApiService
 import com.scribblex.pokemons.data.remote.PokemonRemoteDataSource
+import com.scribblex.pokemons.data.remote.PokemonRemoteDataSourceImpl
 import com.scribblex.pokemons.data.repository.PokemonRepository
 import com.scribblex.pokemons.data.repository.PokemonRepositoryImpl
 import com.scribblex.pokemons.utils.Constants.BASE_URL
@@ -33,7 +34,7 @@ object AppModule {
     fun providePokemonRemoteDataSource(
         pokemonApiService: PokemonApiService,
         dispatchers: DispatcherProvider
-    ) = PokemonRemoteDataSource(pokemonApiService, dispatchers)
+    ) : PokemonRemoteDataSource= PokemonRemoteDataSourceImpl(pokemonApiService, dispatchers)
 
     @Singleton
     @Provides

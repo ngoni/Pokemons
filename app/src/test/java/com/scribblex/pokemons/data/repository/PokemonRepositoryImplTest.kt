@@ -6,34 +6,28 @@ import com.scribblex.pokemons.MainDispatchRule
 import com.scribblex.pokemons.TestDispatchers
 import com.scribblex.pokemons.data.entities.detailpage.DetailPayload
 import com.scribblex.pokemons.data.entities.listingpage.PokemonResponse
-import com.scribblex.pokemons.data.remote.PokemonRemoteDataSource
-import com.scribblex.pokemons.utils.Resource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.kotlin.mock
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
-import org.mockito.kotlin.whenever
 
 @ExperimentalCoroutinesApi
 class PokemonRepositoryImplTest {
 
     @get:Rule
     val mainDispatchRule = MainDispatchRule()
-    private var testDispatcher = mainDispatchRule.testDispatcher
 
     private lateinit var repository: PokemonRepositoryImpl
-    private val dataSourceImpl = mock<PokemonRemoteDataSource>()
+    private val dataSourceImpl = FakePokemonRemoteDataSource()
     private val pokemonId = 2
 
     @Before
     fun setup() {
+        val testDispatcher = mainDispatchRule.dispatcherProvider as TestDispatchers
         repository = PokemonRepositoryImpl(dataSourceImpl, testDispatcher)
     }
 
@@ -52,16 +46,19 @@ class PokemonRepositoryImplTest {
         }
 
     @Test
-    fun `GIVEN getPokemonDetail is called, WHEN returned data is good THEN test should pass`() =
+    fun `GIVEN getPokemonDetail is called and successful, THEN returned response should matched expected data`() =
         runTest {
-            whenever(dataSourceImpl.getPokemonDetail(pokemonId)).thenReturn(
-                flow {
-                    val detailPayload = DetailPayload()
-                    emit(Resource.success(detailPayload))
-                }
-            )
             val payload = repository.getPokemonDetail(pokemonId).first()
             assertThat(DetailPayload()).isEqualTo(payload.data)
         }
 
+    @Test
+    fun `GIVEN getAllPokemon is called and successful,THEN the returned response should match expected data`() =
+        runTest {
+            repository.getAllPokemon().test {
+                val item = awaitItem()
+                cancelAndConsumeRemainingEvents()
+                assertThat(PokemonResponse().results).isEqualTo(item.data)
+            }
+        }
 }

@@ -10,11 +10,11 @@ import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 class MainDispatchRule @Inject constructor(
-    val testDispatcher: DispatcherProvider = TestDispatchers()
+    val dispatcherProvider: DispatcherProvider = TestDispatchers()
 ) : TestWatcher() {
 
     override fun starting(description: Description?) {
-        Dispatchers.setMain(testDispatcher.main)
+        Dispatchers.setMain(dispatcherProvider.main)
     }
 
     override fun finished(description: Description?) {
