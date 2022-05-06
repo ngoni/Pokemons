@@ -12,8 +12,6 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.kotlin.times
-import org.mockito.kotlin.verify
 
 @ExperimentalCoroutinesApi
 class PokemonRepositoryImplTest {
@@ -30,20 +28,6 @@ class PokemonRepositoryImplTest {
         val testDispatcher = mainDispatchRule.dispatcherProvider as TestDispatchers
         repository = PokemonRepositoryImpl(dataSourceImpl, testDispatcher)
     }
-
-    @Test
-    fun `GIVEN getPokemonDetail is called, THEN verify that request is made to RemoteDataSource`() =
-        runTest {
-            dataSourceImpl.getPokemonDetail(pokemonId)
-            verify(dataSourceImpl, times(1)).getPokemonDetail(pokemonId)
-        }
-
-    @Test
-    fun `GIVEN getAllPokemon is called, THEN verify that request is made to RemoteDataSource`() =
-        runTest {
-            dataSourceImpl.getAllPokemon()
-            verify(dataSourceImpl, times(1)).getAllPokemon()
-        }
 
     @Test
     fun `GIVEN getPokemonDetail is called and successful, THEN returned response should matched expected data`() =
