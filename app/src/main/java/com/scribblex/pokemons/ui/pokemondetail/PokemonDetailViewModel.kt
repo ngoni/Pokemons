@@ -7,6 +7,7 @@ import com.scribblex.pokemons.ui.DetailScreenViewState
 import com.scribblex.pokemons.ui.State
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -19,7 +20,7 @@ class PokemonDetailViewModel @Inject constructor(
     ViewModel() {
 
     private val _viewState = MutableStateFlow(DetailScreenViewState())
-    val viewState: MutableStateFlow<DetailScreenViewState> = _viewState
+    val viewState: StateFlow<DetailScreenViewState> = _viewState
 
     fun getPokemonDetail(id: Int) {
         viewModelScope.launch {
@@ -34,6 +35,6 @@ class PokemonDetailViewModel @Inject constructor(
     }
 
     private fun setViewState(state: DetailScreenViewState) {
-        viewState.update { state }
+        _viewState.update { state }
     }
 }

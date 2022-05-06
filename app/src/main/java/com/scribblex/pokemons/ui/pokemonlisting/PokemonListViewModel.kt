@@ -7,6 +7,7 @@ import com.scribblex.pokemons.ui.ListingScreenViewState
 import com.scribblex.pokemons.ui.State.Success
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -19,7 +20,7 @@ class PokemonListViewModel @Inject constructor(
     ViewModel() {
 
     private val _viewState = MutableStateFlow(ListingScreenViewState())
-    val viewState: MutableStateFlow<ListingScreenViewState> = _viewState
+    val viewState: StateFlow<ListingScreenViewState> = _viewState
 
     init {
         getAllPokemon()

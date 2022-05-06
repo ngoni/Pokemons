@@ -39,7 +39,7 @@ fun PokemonDetailScreen(
     navigationActions = _navigationActions
     val viewModel = hiltViewModel<PokemonDetailViewModel>()
     viewModel.getPokemonDetail(id = pokemonId)
-    val viewState = viewModel.viewState.asStateFlow().collectAsState()
+    val viewState = viewModel.viewState.collectAsState()
     RenderUi(viewState = viewState.value)
 }
 

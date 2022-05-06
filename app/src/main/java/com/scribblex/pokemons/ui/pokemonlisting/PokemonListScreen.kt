@@ -30,7 +30,7 @@ fun PokemonListScreen(
 ) {
     navigationActions = _navigationActions
     val viewModel = hiltViewModel<PokemonListViewModel>()
-    val viewState = viewModel.viewState.asStateFlow().collectAsState()
+    val viewState = viewModel.viewState.collectAsState()
     RenderUI(viewState = viewState.value)
 }
 
