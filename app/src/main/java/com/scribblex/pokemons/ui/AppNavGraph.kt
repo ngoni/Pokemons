@@ -13,7 +13,6 @@ import com.scribblex.pokemons.ui.pokemondetail.PokemonDetailScreen
 import com.scribblex.pokemons.ui.pokemondetail.PokemonDetailViewModel
 import com.scribblex.pokemons.ui.pokemonlisting.PokemonListScreen
 import com.scribblex.pokemons.ui.pokemonlisting.PokemonListViewModel
-import com.scribblex.pokemons.ui.pokemonlisting.PokemonListScreen
 import com.scribblex.pokemons.utils.Constants.POKEMON_ID
 import com.scribblex.pokemons.utils.Constants.UN_DEFINED
 
