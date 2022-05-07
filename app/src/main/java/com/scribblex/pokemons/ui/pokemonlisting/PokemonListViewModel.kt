@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.scribblex.pokemons.DispatcherProvider
 import com.scribblex.pokemons.data.repository.PokemonRepository
-import com.scribblex.pokemons.data.repository.PokemonRepositoryImpl
 import com.scribblex.pokemons.ui.ListingScreenViewState
 import com.scribblex.pokemons.ui.State.Success
 import dagger.hilt.android.lifecycle.HiltViewModel

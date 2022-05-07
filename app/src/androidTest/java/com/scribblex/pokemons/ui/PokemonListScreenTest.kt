@@ -5,7 +5,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.navigation.compose.rememberNavController
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.scribblex.pokemons.MainActivity
 import com.scribblex.pokemons.data.entities.listingpage.Results
 import com.scribblex.pokemons.ui.State.Success
@@ -16,10 +15,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 
 @HiltAndroidTest
-@RunWith(AndroidJUnit4::class)
 class PokemonListScreenTest {
 
     @get:Rule(order = 0)
@@ -44,12 +41,13 @@ class PokemonListScreenTest {
             val viewState = MutableStateFlow(data)
             PokemonListScreen(_navigationActions = navigationActions, viewState = viewState)
         }
-        composeTestRule.onRoot().onChildren()[0].onChildren()
+        composeTestRule.onRoot(useUnmergedTree = false).printToLog("PokemonListScreenTest")
+        composeTestRule.onRoot().onChildren()[0].onChildren()[0].onChildren()
             .assertCountEquals(3)
     }
 
     @Test
-    fun check_if_listing_item_is_clickable() {
+    fun check_if_list_item_is_clickable() {
         composeTestRule.setContent {
             val navController = rememberNavController()
             val navigationActions = remember(navController) {
@@ -59,8 +57,8 @@ class PokemonListScreenTest {
             val viewState = MutableStateFlow(data)
             PokemonListScreen(_navigationActions = navigationActions, viewState = viewState)
         }
-        composeTestRule.onRoot()
-            .onChildren()[0].onChildren()[0].assertHasClickAction()
+        composeTestRule.onRoot(useUnmergedTree = true).printToLog("PokemonListScreenTest")
+        composeTestRule.onRoot().onChildren()[0].onChildren()[0].onChildren()[0].assertHasClickAction()
     }
 
     @Composable

@@ -14,7 +14,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
 import com.scribblex.pokemons.R
 import com.scribblex.pokemons.ui.DetailScreenViewState
@@ -27,7 +26,6 @@ import com.scribblex.pokemons.utils.Margins.DP_16
 import com.scribblex.pokemons.utils.Margins.DP_32
 import com.scribblex.pokemons.utils.Margins.DP_8
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import java.util.*
 
 private lateinit var navigationActions: PokemonAppNavigationActions
@@ -142,23 +140,23 @@ private fun PokemonDetailsLayout(viewState: DetailScreenViewState) {
         ) {
 
             val heightText = "Height:     ${viewState.pokemonDetail?.height ?: 0} cm"
-            columnText(heightText)
+            ColumnText(heightText)
 
             val weightText = "Weight:     ${viewState.pokemonDetail?.weight ?: 0} kg"
-            columnText(weightText)
+            ColumnText(weightText)
 
             val typesList = viewState.pokemonDetail?.types
             val formattedTypes = typesList?.joinToString(
                 separator = ", ",
                 transform = { it.type?.name.toString() }) ?: ""
             val typeText = "Types:      $formattedTypes"
-            columnText(typeText)
+            ColumnText(typeText)
         }
     }
 }
 
 @Composable
-private fun columnText(text: String) {
+private fun ColumnText(text: String) {
     Text(
         text = text,
         modifier = Modifier
