@@ -1,9 +1,7 @@
 package com.scribblex.pokemons.di
 
 import com.scribblex.pokemons.data.remote.PokemonApiService
-import com.scribblex.pokemons.data.remote.PokemonRemoteDataSource
-import com.scribblex.pokemons.data.repository.PokemonRepositoryImpl
-import com.scribblex.pokemons.utils.Constants.BASE_URL
+import com.scribblex.pokemons.utils.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,26 +14,16 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AppModule {
+object NetworkModule {
 
     @Singleton
     @Provides
     fun provideRetrofit(): Retrofit = setupRetrofit()
 
+    @Singleton
     @Provides
     fun providePokemonApiService(retrofit: Retrofit): PokemonApiService =
         retrofit.create(PokemonApiService::class.java)
-
-    @Singleton
-    @Provides
-    fun providePokemonRemoteDataSource(pokemonApiService: PokemonApiService) =
-        PokemonRemoteDataSource(pokemonApiService)
-
-    @Singleton
-    @Provides
-    fun providePokemonRepository(
-        pokemonRemoteDataSource: PokemonRemoteDataSource
-    ) = PokemonRepositoryImpl(pokemonRemoteDataSource)
 
     private fun setupRetrofit(): Retrofit {
         val logging = HttpLoggingInterceptor()
@@ -45,7 +33,7 @@ object AppModule {
             .build()
 
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(Constants.BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
