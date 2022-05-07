@@ -1,5 +1,6 @@
 package com.scribblex.pokemons.data.repository
 
+
 import com.scribblex.pokemons.DispatcherProvider
 import com.scribblex.pokemons.data.entities.detailpage.DetailPayload
 import com.scribblex.pokemons.data.entities.listingpage.Results
@@ -20,15 +21,13 @@ class PokemonRepositoryImpl @Inject constructor(
             .transform {
                 val pokemonList: ArrayList<Results> = it.data?.results ?: arrayListOf()
                 emit(Resource.success(pokemonList))
-            }
-            .flowOn(dispatcher.main)
+            }.flowOn(dispatcher.main)
     }
 
     override fun getPokemonDetail(id: Int): Flow<Resource<DetailPayload?>> {
         return dataSourceImpl.getPokemonDetail(id)
             .transform {
                 emit(Resource.success(it.data))
-            }
-            .flowOn(dispatcher.main)
+            }.flowOn(dispatcher.main)
     }
 }

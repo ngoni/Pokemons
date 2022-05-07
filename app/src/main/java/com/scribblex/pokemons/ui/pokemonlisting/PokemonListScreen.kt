@@ -10,6 +10,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.scribblex.pokemons.R
 import com.scribblex.pokemons.data.entities.listingpage.Results
 import com.scribblex.pokemons.ui.ListingScreenViewState
@@ -19,6 +20,7 @@ import com.scribblex.pokemons.utils.Margins.DP_16
 import com.scribblex.pokemons.utils.Margins.DP_4
 import com.scribblex.pokemons.utils.Margins.DP_40
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import java.util.*
 
 
