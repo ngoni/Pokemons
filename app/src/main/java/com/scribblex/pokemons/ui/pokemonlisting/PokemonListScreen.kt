@@ -9,7 +9,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.scribblex.pokemons.R
 import com.scribblex.pokemons.data.entities.listingpage.Results
 import com.scribblex.pokemons.ui.ListingScreenViewState
@@ -18,7 +17,7 @@ import com.scribblex.pokemons.ui.State.*
 import com.scribblex.pokemons.utils.Margins.DP_16
 import com.scribblex.pokemons.utils.Margins.DP_4
 import com.scribblex.pokemons.utils.Margins.DP_40
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import java.util.*
 
 
@@ -27,13 +26,11 @@ private lateinit var navigationActions: PokemonAppNavigationActions
 @Composable
 fun PokemonListScreen(
     _navigationActions: PokemonAppNavigationActions,
+    viewState: StateFlow<ListingScreenViewState>
 ) {
     navigationActions = _navigationActions
-    val viewModel = hiltViewModel<PokemonListViewModel>()
-    val viewState = viewModel.viewState.collectAsState()
-    RenderUI(viewState = viewState.value)
+    RenderUI(viewState = viewState.collectAsState().value)
 }
-
 
 @Composable
 fun PokemonList(pokemonList: ArrayList<Results>?) {

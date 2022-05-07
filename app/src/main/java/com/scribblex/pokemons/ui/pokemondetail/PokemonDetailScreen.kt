@@ -14,7 +14,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
 import com.scribblex.pokemons.R
 import com.scribblex.pokemons.ui.DetailScreenViewState
@@ -26,7 +25,7 @@ import com.scribblex.pokemons.utils.FontSizes.SP_24
 import com.scribblex.pokemons.utils.Margins.DP_16
 import com.scribblex.pokemons.utils.Margins.DP_32
 import com.scribblex.pokemons.utils.Margins.DP_8
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import java.util.*
 
 private lateinit var navigationActions: PokemonAppNavigationActions
@@ -34,13 +33,10 @@ private lateinit var navigationActions: PokemonAppNavigationActions
 @Composable
 fun PokemonDetailScreen(
     _navigationActions: PokemonAppNavigationActions,
-    pokemonId: Int
+    viewState: StateFlow<DetailScreenViewState>
 ) {
     navigationActions = _navigationActions
-    val viewModel = hiltViewModel<PokemonDetailViewModel>()
-    viewModel.getPokemonDetail(id = pokemonId)
-    val viewState = viewModel.viewState.collectAsState()
-    RenderUi(viewState = viewState.value)
+    RenderUi(viewState = viewState.collectAsState().value)
 }
 
 @Composable
