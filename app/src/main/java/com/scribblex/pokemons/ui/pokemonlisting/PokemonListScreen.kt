@@ -3,6 +3,7 @@ package com.scribblex.pokemons.ui.pokemonlisting
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -34,15 +35,18 @@ fun PokemonListScreen(
 
 @Composable
 fun PokemonList(pokemonList: ArrayList<Results>?) {
-    LazyColumn(
-        modifier = Modifier
-            .padding(DP_16)
-            .fillMaxSize()
-    ) {
-        pokemonList?.forEachIndexed { index, pokemon ->
-            item {
-                val pokemonId = index + 1
-                PokemonRow(pokemonId = pokemonId, pokemon = pokemon)
+    Surface(modifier = Modifier.fillMaxSize()) {
+        LazyColumn(
+            modifier = Modifier
+                .padding(DP_16)
+                .fillMaxSize()
+        ) {
+            pokemonList?.forEachIndexed { index, pokemon ->
+                item {
+                    // FIXME: Assumption made on received data, a more generic solution is needed
+                    val pokemonId = index + 1
+                    PokemonRow(pokemonId = pokemonId, pokemon = pokemon)
+                }
             }
         }
     }
